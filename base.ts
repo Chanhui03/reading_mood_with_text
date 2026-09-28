@@ -1,0 +1,37 @@
+// 기사 기반 27가지 감정 Enum 정의
+enum Emotion27 {
+  ADMIRATION = "ADMIRATION",
+  ADORATION = "ADORATION",
+  AESTHETIC_APPRECIATION = "AESTHETIC_APPRECIATION",
+  AMUSEMENT = "AMUSEMENT",
+  ANXIETY = "ANXIETY",
+  AWE = "AWE",
+  AWKWARDNESS = "AWKWARDNESS",
+  BOREDOM = "BOREDOM",
+  CALMNESS = "CALMNESS",
+  CONFUSION = "CONFUSION",
+  CRAVING = "CRAVING",
+  DISGUST = "DISGUST",
+  EMPATHETIC_PAIN = "EMPATHETIC_PAIN",
+  ENTRANCEMENT = "ENTRANCEMENT",
+  ENVY = "ENVY",
+  EXCITEMENT = "EXCITEMENT",
+  FEAR = "FEAR",
+  HORROR = "HORROR",
+  INTEREST = "INTEREST",
+  JOY = "JOY",
+  NOSTALGIA = "NOSTALGIA",
+  ROMANCE = "ROMANCE",
+  SADNESS = "SADNESS",
+  SATISFACTION = "SATISFACTION",
+  SEXUAL_DESIRE = "SEXUAL_DESIRE",
+  SYMPATHY = "SYMPATHY",
+  TRIUMPH = "TRIUMPH",
+}
+
+// Jev 출력 스키마
+interface DetailedEmotionAnalysis {
+  primary_emotion: Emotion27; // 가장 강력한 주 감정
+  secondary_emotion: Emotion27; // 동반되는 부가 감정 (기사에서 언급했듯 감정은 스펙트럼으로 나타남)
+  confidence_score: number;
+}
