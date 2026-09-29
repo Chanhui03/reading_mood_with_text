@@ -3,8 +3,8 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 from typesafe_sdk import TypeSafeClient, Choice, Score
 
-# 1. 27가지 기본 감정을 고정된 값(Enum)으로 정의합니다.
-class Emotion27(str, Enum):
+# 1. 26가지 기본 감정을 고정된 값(Enum)으로 정의합니다.
+class Emotion26(str, Enum):
     ADMIRATION = "ADMIRATION"                   # 존경
     ADORATION = "ADORATION"                     # 흠모
     AESTHETIC_APPRECIATION = "AESTHETIC_APPRECIATION" # 심미적 감상
@@ -29,52 +29,48 @@ class Emotion27(str, Enum):
     ROMANCE = "ROMANCE"                         # 로맨스
     SADNESS = "SADNESS"                         # 슬픔
     SATISFACTION = "SATISFACTION"               # 만족
-    SEXUAL_DESIRE = "SEXUAL_DESIRE"             # 성적 욕구
     SYMPATHY = "SYMPATHY"                       # 공감
     TRIUMPH = "TRIUMPH"                         # 승리감
 
 # 2. Jev 모델이 응답할 완벽한 JSON 구조를 Pydantic 모델로 강제합니다.
 class EmotionAnalysisResponse(BaseModel):
-    primary_emotion: Emotion27      # 가장 주된 감정
-    secondary_emotion: Emotion27    # 부가적인 감정
+    primary_emotion: Emotion26      # 가장 주된 감정
+    secondary_emotion: Emotion26    # 부가적인 감정
     confidence_score: float         # 판독 신뢰도 (0.0 ~ 1.0)
     intensity: int                  # 감정의 강도 (1 ~ 9)
 
 # 3. Jev API 호출 함수
 def analyze_emotion_with_jev(input_text: str) -> EmotionAnalysisResponse:
-    print(f'[Jev API 호출 중...] 입력 텍스트: "{input_text}"')
-    
     load_dotenv()
 
-    # Jev 모델이 27가지 감정을 정확히 분류할 수 있도록 각 감정의 의미(기준)를 딕셔너리로 정의합니다.
+    # Jev 모델이 26가지 감정을 정확히 분류할 수 있도록 각 감정의 의미(기준)를 딕셔너리로 정의합니다.
     emotion_criteria = {
-        Emotion27.ADMIRATION.value: "존경하거나 우러러보는 감정",
-        Emotion27.ADORATION.value: "깊이 흠모하거나 애정을 느끼는 감정",
-        Emotion27.AESTHETIC_APPRECIATION.value: "예술이나 아름다움을 감상하는 감정",
-        Emotion27.AMUSEMENT.value: "재미있거나 즐거운 감정",
-        Emotion27.ANXIETY.value: "걱정, 불안, 초조함",
-        Emotion27.AWE.value: "경외감, 압도되는 느낌",
-        Emotion27.AWKWARDNESS.value: "어색하고 민망한 감정",
-        Emotion27.BOREDOM.value: "지루함, 따분함",
-        Emotion27.CALMNESS.value: "차분하고 평온한 상태",
-        Emotion27.CONFUSION.value: "혼란스럽거나 당혹스러운 감정",
-        Emotion27.CRAVING.value: "무언가를 간절히 원하거나 갈망함",
-        Emotion27.DISGUST.value: "역겨움, 혐오감, 강한 불쾌감",
-        Emotion27.EMPATHETIC_PAIN.value: "타인의 고통에 공감하여 느끼는 아픔",
-        Emotion27.ENTRANCEMENT.value: "무언가에 매료된 황홀경",
-        Emotion27.ENVY.value: "부러움이나 질투",
-        Emotion27.EXCITEMENT.value: "흥분되고 신나는 감정",
-        Emotion27.FEAR.value: "두려움, 무서움",
-        Emotion27.HORROR.value: "소름 끼치는 공포",
-        Emotion27.INTEREST.value: "흥미, 호기심, 관심",
-        Emotion27.JOY.value: "기쁨, 행복함",
-        Emotion27.NOSTALGIA.value: "과거에 대한 향수나 그리움",
-        Emotion27.ROMANCE.value: "로맨틱한 감정",
-        Emotion27.SADNESS.value: "슬픔, 우울함",
-        Emotion27.SATISFACTION.value: "만족스러움",
-        Emotion27.SEXUAL_DESIRE.value: "성적 욕구",
-        Emotion27.SYMPATHY.value: "타인에 대한 동정이나 공감",
-        Emotion27.TRIUMPH.value: "승리감, 성취감"
+        Emotion26.ADMIRATION.value: "존경하거나 우러러보는 감정",
+        Emotion26.ADORATION.value: "깊이 흠모하거나 애정을 느끼는 감정",
+        Emotion26.AESTHETIC_APPRECIATION.value: "예술이나 아름다움을 감상하는 감정",
+        Emotion26.AMUSEMENT.value: "재미있거나 즐거운 감정",
+        Emotion26.ANXIETY.value: "걱정, 불안, 초조함",
+        Emotion26.AWE.value: "경외감, 압도되는 느낌",
+        Emotion26.AWKWARDNESS.value: "어색하고 민망한 감정",
+        Emotion26.BOREDOM.value: "지루함, 따분함",
+        Emotion26.CALMNESS.value: "차분하고 평온한 상태",
+        Emotion26.CONFUSION.value: "혼란스럽거나 당혹스러운 감정",
+        Emotion26.CRAVING.value: "무언가를 간절히 원하거나 갈망함",
+        Emotion26.DISGUST.value: "역겨움, 혐오감, 강한 불쾌감",
+        Emotion26.EMPATHETIC_PAIN.value: "타인의 고통에 공감하여 느끼는 아픔",
+        Emotion26.ENTRANCEMENT.value: "무언가에 매료된 황홀경",
+        Emotion26.ENVY.value: "부러움이나 질투",
+        Emotion26.EXCITEMENT.value: "흥분되고 신나는 감정",
+        Emotion26.FEAR.value: "두려움, 무서움",
+        Emotion26.HORROR.value: "소름 끼치는 공포",
+        Emotion26.INTEREST.value: "흥미, 호기심, 관심",
+        Emotion26.JOY.value: "기쁨, 행복함",
+        Emotion26.NOSTALGIA.value: "과거에 대한 향수나 그리움",
+        Emotion26.ROMANCE.value: "로맨틱한 감정",
+        Emotion26.SADNESS.value: "슬픔, 우울함",
+        Emotion26.SATISFACTION.value: "만족스러움",
+        Emotion26.SYMPATHY.value: "타인에 대한 동정이나 공감",
+        Emotion26.TRIUMPH.value: "승리감, 성취감"
     }
 
     with TypeSafeClient() as client:
@@ -121,36 +117,12 @@ def analyze_emotion_with_jev(input_text: str) -> EmotionAnalysisResponse:
 def main():
     customer_review = input("입력: ")
     
-    try:
-        # API 호출 및 결과 받아오기
-        analysis = analyze_emotion_with_jev(customer_review)
+    
+    # API 호출 및 결과 받아오기
+    analysis = analyze_emotion_with_jev(customer_review)
         
-        print("\n[분석 완료 - 수신된 데이터]")
-        print(analysis.model_dump_json(indent=2))
-        
-        print("\n[시스템 후속 조치 판단]")
-        
-        if analysis.confidence_score < 0.7:
-            print("-> ⚠️ 신뢰도가 낮습니다. 관리자 검수(Human Review) 대기열로 보냅니다.")
-            return
-
-        # Python 3.10+ match-case를 통한 라우팅
-        match analysis.primary_emotion:
-            case Emotion27.DISGUST | Emotion27.HORROR | Emotion27.FEAR:
-                if analysis.intensity >= 7:
-                    print("-> 🚨 심각한 불만/공포 감지됨. 최우선 순위로 전문 상담원에게 즉시 연결합니다.")
-                    
-            case Emotion27.CRAVING | Emotion27.INTEREST:
-                print("-> 🎯 고객이 흥미/간절함을 보이고 있습니다. 관련 상품의 구매 링크를 챗봇이 제안합니다.")
-                
-            case Emotion27.CONFUSION | Emotion27.AWKWARDNESS:
-                print("-> ❓ 고객이 혼란스러워합니다. 상세한 이용 가이드라인(FAQ)을 발송합니다.")
-                
-            case _:
-                print("-> 🤖 일반적인 상태입니다. 기본 AI 챗봇이 응대를 계속합니다.")
-
-    except Exception as e:
-        print(f"감정 분석 중 오류가 발생했습니다: {e}")
+    print("\n[분석 완료 - 수신된 데이터]")
+    print(analysis.model_dump_json(indent=2))
 
 if __name__ == "__main__":
     main()
