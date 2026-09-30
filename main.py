@@ -35,34 +35,34 @@ class Emotion26(str, Enum):
     SYMPATHY = "SYMPATHY"                       # 공감
     TRIUMPH = "TRIUMPH"                         # 승리감
 
-# 출력용: 감정별 이모지와 한글 이름
+# 출력용: 감정별 한글 이름
 EMOTION_DISPLAY = {
-    Emotion26.ADMIRATION: ("👏", "존경"),
-    Emotion26.ADORATION: ("🥰", "흠모"),
-    Emotion26.AESTHETIC_APPRECIATION: ("🎨", "심미적 감상"),
-    Emotion26.AMUSEMENT: ("😄", "즐거움"),
-    Emotion26.ANXIETY: ("😰", "걱정"),
-    Emotion26.AWE: ("😮", "경외감"),
-    Emotion26.AWKWARDNESS: ("😅", "어색함"),
-    Emotion26.BOREDOM: ("🥱", "지루함"),
-    Emotion26.CALMNESS: ("😌", "차분함"),
-    Emotion26.CONFUSION: ("😕", "혼란스러움"),
-    Emotion26.CRAVING: ("🤤", "간절함"),
-    Emotion26.DISGUST: ("🤢", "역겨움"),
-    Emotion26.EMPATHETIC_PAIN: ("😣", "공감적 고통"),
-    Emotion26.ENTRANCEMENT: ("🤩", "황홀경"),
-    Emotion26.ENVY: ("😒", "부러움, 질투"),
-    Emotion26.EXCITEMENT: ("🥳", "흥분됨, 신남"),
-    Emotion26.FEAR: ("😨", "두려움"),
-    Emotion26.HORROR: ("😱", "공포"),
-    Emotion26.INTEREST: ("🤔", "흥미, 호기심"),
-    Emotion26.JOY: ("😊", "기쁨"),
-    Emotion26.NOSTALGIA: ("🥹", "향수, 그리움"),
-    Emotion26.ROMANCE: ("💕", "로맨스"),
-    Emotion26.SADNESS: ("😢", "슬픔"),
-    Emotion26.SATISFACTION: ("👍", "만족"),
-    Emotion26.SYMPATHY: ("🤗", "공감"),
-    Emotion26.TRIUMPH: ("🏆", "승리감"),
+    Emotion26.ADMIRATION: "존경",
+    Emotion26.ADORATION: "흠모",
+    Emotion26.AESTHETIC_APPRECIATION: "심미적 감상",
+    Emotion26.AMUSEMENT: "즐거움",
+    Emotion26.ANXIETY: "걱정",
+    Emotion26.AWE: "경외감",
+    Emotion26.AWKWARDNESS: "어색함",
+    Emotion26.BOREDOM: "지루함",
+    Emotion26.CALMNESS: "차분함",
+    Emotion26.CONFUSION: "혼란스러움",
+    Emotion26.CRAVING: "간절함",
+    Emotion26.DISGUST: "역겨움",
+    Emotion26.EMPATHETIC_PAIN: "공감적 고통",
+    Emotion26.ENTRANCEMENT: "황홀경",
+    Emotion26.ENVY: "부러움, 질투",
+    Emotion26.EXCITEMENT: "흥분됨, 신남",
+    Emotion26.FEAR: "두려움",
+    Emotion26.HORROR: "공포",
+    Emotion26.INTEREST: "흥미, 호기심",
+    Emotion26.JOY: "기쁨",
+    Emotion26.NOSTALGIA: "향수, 그리움",
+    Emotion26.ROMANCE: "로맨스",
+    Emotion26.SADNESS: "슬픔",
+    Emotion26.SATISFACTION: "만족",
+    Emotion26.SYMPATHY: "공감",
+    Emotion26.TRIUMPH: "승리감",
 }
 
 # 감정별 테루테루보즈 이미지 폴더 (PyInstaller 빌드 시에는 _MEIPASS 기준)
@@ -165,15 +165,15 @@ def main():
     # API 호출 및 결과 받아오기
     analysis = analyze_emotion_with_jev(customer_review)
         
-    primary_emoji, primary_name = EMOTION_DISPLAY[analysis.primary_emotion]
-    secondary_emoji, secondary_name = EMOTION_DISPLAY[analysis.secondary_emotion]
+    primary_name = EMOTION_DISPLAY[analysis.primary_emotion]
+    secondary_name = EMOTION_DISPLAY[analysis.secondary_emotion]
     intensity_bar = "🟧" * analysis.intensity + "⬜" * (9 - analysis.intensity)
 
     print("\n[분석 완료]")
     print_emotion_image(analysis.primary_emotion)
-    print(f"주 감정: {primary_emoji} {primary_name}")
+    print(f"주 감정: {primary_name}")
     print_emotion_image(analysis.secondary_emotion)
-    print(f"부 감정: {secondary_emoji} {secondary_name}")
+    print(f"부 감정: {secondary_name}")
     print(f"강도:   {intensity_bar} ({analysis.intensity}/9)")
     print(f"신뢰도: {analysis.confidence_score:.0%}")
 
