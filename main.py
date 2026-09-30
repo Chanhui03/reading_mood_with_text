@@ -1,4 +1,7 @@
+import base64
+import sys
 from enum import Enum
+from pathlib import Path
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from typesafe_sdk import TypeSafeClient, Choice, Score
@@ -61,6 +64,17 @@ EMOTION_DISPLAY = {
     Emotion26.SYMPATHY: ("🤗", "공감"),
     Emotion26.TRIUMPH: ("🏆", "승리감"),
 }
+
+# 감정별 테루테루보즈 이미지 폴더 (PyInstaller 빌드 시에는 _MEIPASS 기준)
+EMOTION_IMAGE_DIR = Path(getattr(sys, "_MEIPASS", Path(__file__).parent)) / "emotions"
+
+def print_emotion_image(emotion: Emotion26):
+    # iTerm2 인라인 이미지 프로토콜로 출력 (JOY처럼 이미지가 없으면 생략)
+    path = EMOTION_IMAGE_DIR / f"{emotion.value}.png"
+    if not path.exists():
+        return
+    data = base64.b64encode(path.read_bytes()).decode()
+    print(f"\033]1337;File=inline=1;width=12;preserveAspectRatio=1:{data}\a")
 
 # 2. Jev 모델이 응답할 완벽한 JSON 구조를 Pydantic 모델로 강제합니다.
 class EmotionAnalysisResponse(BaseModel):
@@ -156,7 +170,9 @@ def main():
     intensity_bar = "🟧" * analysis.intensity + "⬜" * (9 - analysis.intensity)
 
     print("\n[분석 완료]")
+    print_emotion_image(analysis.primary_emotion)
     print(f"주 감정: {primary_emoji} {primary_name}")
+    print_emotion_image(analysis.secondary_emotion)
     print(f"부 감정: {secondary_emoji} {secondary_name}")
     print(f"강도:   {intensity_bar} ({analysis.intensity}/9)")
     print(f"신뢰도: {analysis.confidence_score:.0%}")
